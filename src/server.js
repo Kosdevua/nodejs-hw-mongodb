@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
-import 'dotenv/config';
+import { getEnvVar } from './utils/getEnvVar.js';
 
 export const setupServer = () => {
   const app = express();
@@ -31,7 +31,7 @@ export const setupServer = () => {
     });
   });
 
-  const port = Number(process.env.PORT);
+  const port = Number(getEnvVar('PORT', 3000));
 
   app.listen(port, () => {
     console.log(`server working in port ${port} port`);
