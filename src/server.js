@@ -1,7 +1,21 @@
 import express from 'express';
+import cors from 'cors';
+import PinoHttp from 'pino-http';
+
+const PORT = 3000;
 
 const setupServer = express();
 
-setupServer.listen(3000, () => {
-  console.log('server working in port 3000');
+setupServer.use(cors());
+
+const logger = PinoHttp({
+  transport: {
+    target: 'pino-pretty',
+  },
+});
+
+setupServer.use(logger);
+
+setupServer.listen(PORT, () => {
+  console.log(`server working in port ${PORT}`);
 });
