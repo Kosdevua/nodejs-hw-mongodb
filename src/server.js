@@ -1,21 +1,39 @@
 import express from 'express';
 import cors from 'cors';
-import PinoHttp from 'pino-http';
+import pino from 'pino-http';
+import 'dotenv/config';
 
-const PORT = 3000;
+export const setupServer = () => {
+  const app = express();
+  app.use(cors());
+  app.use(express.json());
+  app.use(
+    pino({
+      transport: {
+        target: 'pino-pretty',
+      },
+    }),
+  );
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'Server start successfully',
+    });
+  });
+  app.use((req, res) => {
+    res.status(404).json({
+      message: `${req.url} not found`,
+    });
+  });
 
-const setupServer = express();
+  app.use((error, req, res, next) => {
+    res.status(500).json({
+      message: error.message,
+    });
+  });
 
-setupServer.use(cors());
+  const port = Number(process.env.PORT);
 
-const logger = PinoHttp({
-  transport: {
-    target: 'pino-pretty',
-  },
-});
-
-setupServer.use(logger);
-
-setupServer.listen(PORT, () => {
-  console.log(`server working in port ${PORT}`);
-});
+  app.listen(port, () => {
+    console.log(`server working in port ${port} port`);
+  });
+};
