@@ -25,3 +25,6 @@ export const updateContact = async (_id, payload, option = {}) => {
     isNew: Boolean(rawResult.lastErrorObject.upserted), //true -   якщо ми додали, false - якщо ми оновили
   };
 };
+
+export const deleteContactById = (_id) =>
+  contactCollection.findOneAndDelete({ _id });
