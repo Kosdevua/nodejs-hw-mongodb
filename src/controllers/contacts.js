@@ -5,6 +5,7 @@ import {
   getContacts,
   addContact,
   updateContact,
+  deleteContactById,
 } from '../services/contacts.js';
 
 export const getContactsController = async (req, res, next) => {
@@ -52,20 +53,46 @@ export const addContactController = async (req, res) => {
   const data = await addContact(req.body);
   res.status(201).json({
     status: 201,
-    message: 'Successfully add comtact',
+    message: 'Successfully add contact',
     data,
   });
 };
 
-export const upsertContactController = async (req, res) => {
-  const { id } = req.params;
-  const { data, isNew } = await updateContact(id, req.body, { upsert: true }); // додаємо третім аргументом upsert: true
+// export const upsertContactController = async (req, res) => {
+//   const { contactId } = req.params;
+//   const { data, isNew } = await updateContact(contactId, req.body, {
+//     upsert: true,
+//   }); // додаємо третім аргументом upsert: true
 
-  const status = isNew ? 201 : 200;
+//   const status = isNew ? 201 : 200;
 
-  res.status(status).json({
-    status,
-    message: 'Sucessfuly update contact',
-    data,
+//   res.status(status).json({
+//     status,
+//     message: 'Sucessfuly update contact',
+//     data,
+//   });
+// };
+export const patchContactControler = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await updateContact(contactId, req.body);
+  if (!result) {
+    throw createHttpError(404, `Contact with id=${contactId} not found`);
+  }
+
+  res.json({
+    status: 200,
+    message: 'Successfully update contact',
+    data: result.data,
   });
+};
+
+export const deleteContactControler = async (req, res) => {
+  const { contactId } = req.params;
+  const data = await deleteContactById(contactId);
+
+  if (!data) {
+    throw createHttpError(404, `Contact with id=${contactId} not found`);
+  }
+
+  res.status(204).send();
 };

@@ -19,9 +19,15 @@ export const updateContact = async (_id, payload, option = {}) => {
     includeResultMetadata: true, //повертається повний результат відповіді
   });
 
-  if (!rawResult || rawResult.value) return null;
+  if (!rawResult) {
+    return null;
+  }
+
   return {
     data: rawResult.value,
-    isNew: Boolean(rawResult.lastErrorObject.upserted), //true -   якщо ми додали, false - якщо ми оновили
+    isNew: Boolean(rawResult.lastErrorObject.upserted),
   };
 };
+
+export const deleteContactById = (_id) =>
+  contactCollection.findOneAndDelete({ _id });
