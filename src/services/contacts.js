@@ -4,19 +4,18 @@ export const getContacts = () => {
   return contactCollection.find();
 };
 export const getContactId = (id) => {
-  //   throw new Error('Database crashed');
   return contactCollection.findOne({ _id: id });
 };
 
 export const addContact = (payload) => contactCollection.create(payload);
 
 export const updateContact = async (_id, payload, option = {}) => {
-  const { upsert = false } = option; // передаємо третім аргументом
+  const { upsert = false } = option;
 
   const rawResult = await contactCollection.findOneAndUpdate({ _id }, payload, {
-    new: true, //щоб додавав оновлений обект
-    upsert, // щоб він додавав або оновлював та додавав
-    includeResultMetadata: true, //повертається повний результат відповіді
+    new: true,
+    upsert,
+    includeResultMetadata: true,
   });
 
   if (!rawResult) {
