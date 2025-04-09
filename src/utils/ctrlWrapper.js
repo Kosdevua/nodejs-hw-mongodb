@@ -3,6 +3,7 @@ export const ctrlWrapper = (ctrl) => {
     try {
       await ctrl(req, res, next);
     } catch (error) {
+      console.log('Error in ctrlWrapper:', error);
       next(error);
     }
   };
