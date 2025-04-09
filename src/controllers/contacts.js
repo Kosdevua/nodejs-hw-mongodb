@@ -49,7 +49,7 @@ export const addContactController = async (req, res) => {
   });
 };
 
-export const patchContactControler = async (req, res) => {
+export const patchContactController = async (req, res) => {
   const { contactId } = req.params;
   const result = await updateContact(contactId, req.body);
   if (!result) {
@@ -63,7 +63,7 @@ export const patchContactControler = async (req, res) => {
   });
 };
 
-export const deleteContactControler = async (req, res) => {
+export const deleteContactController = async (req, res) => {
   const { contactId } = req.params;
   const data = await deleteContactById(contactId);
 
