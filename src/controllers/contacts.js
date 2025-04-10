@@ -1,5 +1,4 @@
 import createHttpError from 'http-errors';
-import { isValidObjectId } from 'mongoose';
 import {
   getContactId,
   getContacts,
@@ -19,13 +18,6 @@ export const getContactsController = async (req, res, next) => {
 
 export const getContactByIdController = async (req, res) => {
   const { contactId } = req.params;
-
-  if (!isValidObjectId(contactId)) {
-    return res.status(400).json({
-      status: 400,
-      message: `Invalid contact id format: ${contactId}`,
-    });
-  }
 
   const data = await getContactId(contactId);
 
