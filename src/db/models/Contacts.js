@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose';
 
+import { typeList } from '../../constants/contacts.js';
+
 const contactShema = new Schema(
   {
     name: {
@@ -20,9 +22,9 @@ const contactShema = new Schema(
     },
     contactType: {
       type: String,
-      enum: ['work', 'home', 'personal'],
+      enum: typeList,
       required: true,
-      default: 'personal',
+      default: typeList[0],
     },
   },
   {
