@@ -9,7 +9,7 @@ import {
   deleteContactController,
 } from '../controllers/contacts.js';
 
-import { validateBody } from '../utils/validateBody.js';
+import { validateBody } from '../middlewares/validateBody.js';
 
 import {
   contactAddSchema,
