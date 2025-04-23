@@ -4,15 +4,20 @@ import cors from 'cors';
 import { getEnvVar } from './utils/getEnvVar.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import { contactRouter } from './routers/contacts.js';
+import contactRouter from './routers/contacts.js';
+import authRouter from './routers/auth.js';
+// import router from './routers/index.js';
 
 export const setupServer = () => {
   const app = express();
+
+  // app.use(router);
 
   app.use(cors());
 
   app.use(express.json());
 
+  app.use('/auth', authRouter);
   app.use('/contacts', contactRouter);
 
   app.use(notFoundHandler);

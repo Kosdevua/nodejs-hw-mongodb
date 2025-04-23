@@ -1,5 +1,5 @@
-import { UserCollection } from '../db/models/user.js';
+import { UserCollection } from '../db/models/User.js';
 
-export const regesterUser = async (payload) => {
+export const registerUser = async (payload) => {
   return await UserCollection.create(payload);
 };
