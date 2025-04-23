@@ -9,7 +9,7 @@ import {
   deleteContactController,
 } from '../controllers/contacts.js';
 
-import { validateBody } from '../utils/validateBody.js';
+import { validateBody } from '../middlewares/validateBody.js';
 
 import {
   contactAddSchema,
@@ -18,7 +18,7 @@ import {
 
 import { isValidId } from '../middlewares/isValidId.js';
 
-export const contactRouter = Router();
+const contactRouter = Router();
 
 contactRouter.get('/', ctrlWrapper(getContactsController));
 
@@ -46,3 +46,5 @@ contactRouter.delete(
   isValidId,
   ctrlWrapper(deleteContactController),
 );
+
+export default contactRouter;
