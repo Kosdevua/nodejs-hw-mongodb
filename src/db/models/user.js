@@ -5,7 +5,7 @@ import { handleSaveError } from './hooks.js';
 
 const usersSchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: [true, 'Username nust be exist'] },
 
     email: { type: String, match: emailRegexp, required: true, unique: true },
     password: { type: String, required: true },
