@@ -5,12 +5,15 @@ import { handleSaveError } from './hooks.js';
 
 const usersSchema = new Schema(
   {
-    name: { type: String, required: [true, 'Username nust be exist'] },
+    name: { type: String, required: [true, 'Username must be exist'] },
 
-    email: { type: String, match: emailRegexp, required: true, unique: true },
+    email: { type: String, match: emailRegexp, unique: true, required: true },
     password: { type: String, required: true },
   },
-  { timestramps: true, versionKey: false },
+  {
+    versionKey: false,
+    timestamps: true,
+  },
 );
 
 usersSchema.methods.toJSON = function () {
@@ -19,8 +22,10 @@ usersSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const UserCollection = model('users', usersSchema);
-
 usersSchema.post('save', handleSaveError);
 
 usersSchema.post('findOneAndUpdate', handleSaveError);
+
+const UserCollection = model('users', usersSchema);
+
+export default UserCollection;
