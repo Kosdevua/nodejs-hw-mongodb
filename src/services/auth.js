@@ -11,10 +11,12 @@ import {
   accessTokenLifeTime,
 } from '../constants/auth.js';
 
-console.log(randomBytes(30).toString('base64'));
+export const findSession = (query) => SessionCollection.findOne(query);
+
+export const findUser = (query) => UserCollection.findOne(query);
 
 export const registerUser = async (payload) => {
-  const user = await UserCollection.findOne({ email: payload.email });
+  const user = await findUser({ email: payload.email });
   if (user) throw createHttpError(409, 'Email is use');
 
   const hashPassword = await bcrypt.hash(payload.password, 10);
@@ -28,7 +30,7 @@ export const registerUser = async (payload) => {
 };
 
 export const loginUser = async (payload) => {
-  const user = await UserCollection.findOne({ email: payload.email });
+  const user = await findUser({ email: payload.email });
   if (!user) {
     throw createHttpError(401, 'User not found');
   }
