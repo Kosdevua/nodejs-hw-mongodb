@@ -1,4 +1,4 @@
-import { accessTokenLifeTime } from '../constants/auth.js';
+// import { accessTokenLifeTime } from '../constants/auth.js';
 import { registerUser, loginUser } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
