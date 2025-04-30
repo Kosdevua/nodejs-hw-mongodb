@@ -26,6 +26,4 @@ usersSchema.post('save', handleSaveError);
 
 usersSchema.post('findOneAndUpdate', handleSaveError);
 
-const UserCollection = model('users', usersSchema);
-
-export default UserCollection;
+export const UserCollection = model('users', usersSchema);
