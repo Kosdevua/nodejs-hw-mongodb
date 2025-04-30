@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-
 import { typeList } from '../../constants/contacts.js';
 
 const contactShema = new Schema(
@@ -28,7 +27,7 @@ const contactShema = new Schema(
     },
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'users',
       required: true,
     },
   },
@@ -39,5 +38,4 @@ const contactShema = new Schema(
 );
 
 const contactCollection = model('contact', contactShema);
-
 export default contactCollection;
