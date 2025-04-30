@@ -1,13 +1,14 @@
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 import { randomBytes } from 'node:crypto';
-import UserCollection from '../db/models/User.js';
+import { UserCollection } from '../db/models/User.js';
 
-import SessionCollection from '../db/models/Session.js';
+import { SessionCollection } from '../db/models/Session.js';
 
 import {
-  refreshTokenLifeTime,
+  // refreshTokenLifeTime,
   accessTokenLifeTime,
+  refreshTokenLifeTime,
 } from '../constants/auth.js';
 
 export const findSession = (query) => SessionCollection.findOne(query);
