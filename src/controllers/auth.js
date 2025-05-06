@@ -1,7 +1,4 @@
-import {
-  accessTokenLifeTime,
-  refreshTokenLifeTime,
-} from '../constants/auth.js';
+import { refreshTokenLifeTime } from '../constants/auth.js';
 import {
   registerUser,
   loginUser,
@@ -54,11 +51,13 @@ export const setupSession = (res, session) => {
     httpOnly: true,
     expires: new Date(Date.now() + refreshTokenLifeTime),
   });
+
   res.cookie('sessionId', session._id, {
     httpOnly: true,
     expires: new Date(Date.now() + refreshTokenLifeTime),
   });
 };
+
 export const refreshUserSessionController = async (req, res) => {
   const session = await refreshUsersSession({
     sessionId: req.cookies.sessionId,
