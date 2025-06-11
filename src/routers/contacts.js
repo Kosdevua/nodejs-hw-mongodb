@@ -20,6 +20,8 @@ import { isValidId } from '../middlewares/isValidId.js';
 
 import { authenticate } from '../middlewares/authenticate.js';
 
+import { upload } from '../middlewares/multer.js';
+
 const contactRouter = Router();
 
 contactRouter.use(authenticate);
