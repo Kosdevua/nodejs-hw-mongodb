@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:8080"
+      "url": "https://nodejs-hw-mongodb-7fws.onrender.com"
     }
   ],
   "tags": [
@@ -203,7 +203,7 @@
                   },
                   "photo": {
                     "type": "string",
-                    "format": "url",
+                    "format": "binary",
                     "description": "Contact photo url",
                     "example": "https://res.cloudinary.com/df5xsxnzm/image/upload/v1749232498/jpolliyga4egrctz965w.jpg"
                   }
@@ -611,7 +611,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Email or password is incorrect"
+                      "example": "Access token expired"
                     }
                   }
                 }
