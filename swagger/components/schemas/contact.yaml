@@ -3,6 +3,9 @@ required:
   - _id
   - name
   - phoneNumber
+  - email
+  - isFavourite
+  - contactType
   - userId
   - createdAt
   - updatedAt
@@ -31,7 +34,7 @@ properties:
   contactType:
     type: string
     description: Contact type
-    enum: ['work', 'home']
+    enum: ['work', 'home', 'personal']
     example: home
   userId:
     type: string
@@ -40,7 +43,7 @@ properties:
   photo:
     type: string
     format: url
-    description: Contact avatar url
+    description: Contact photo url
     example: https://res.cloudinary.com/da0i52xig/image/upload/v1750003633/v02yx9z167auidxqc7ur.png
   createdAt:
     type: string

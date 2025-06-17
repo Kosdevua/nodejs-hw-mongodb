@@ -14,7 +14,7 @@ parameters:
       example: 507f1f77bcf86cd799439011
 responses:
   '200':
-    description: Get student by id
+    description: Get contact by id
     content:
       application/json:
         schema:
@@ -33,7 +33,8 @@ responses:
             data:
               type: object
               $ref: ../../../components/schemas/contact.yaml
-
+  '401':
+    $ref: ../../../components/responses/401.yaml
   '404':
     description: Contact not found
     content:
@@ -50,3 +51,5 @@ responses:
             message:
               type: string
               example: Contact not found
+  '500':
+    $ref: ../../../components/responses/500.yaml

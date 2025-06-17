@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "nodejs-hw-mongodb",
+    "title": "hw7-swagger",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -18,10 +18,6 @@
     {
       "name": "Contacts",
       "description": "Operations with contacts."
-    },
-    {
-      "name": "Auth",
-      "description": "Auth operations."
     }
   ],
   "paths": {
@@ -51,7 +47,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Get student by id",
+            "description": "Get contact by id",
             "content": {
               "application/json": {
                 "schema": {
@@ -79,6 +75,9 @@
               }
             }
           },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "404": {
             "description": "Contact not found",
             "content": {
@@ -102,11 +101,300 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Delete contacts",
+        "operationId": "deleteContact",
+        "description": "Delete contacts",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "684ed8d781767fe882e5e1ce"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contacts delete"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Update contacts",
+        "operationId": "updateContact",
+        "description": "Update contacts",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6841738d9abba11274e4c270"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Contact name",
+                    "example": "Nejk dima"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "Phone contact",
+                    "example": 3802341230
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email contact",
+                    "example": "doe@mail.com"
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "description": "Contact favourite",
+                    "example": false
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "description": "Contact type",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ],
+                    "example": "personal"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "Contact photo url",
+                    "example": "https://res.cloudinary.com/df5xsxnzm/image/upload/v1749232498/jpolliyga4egrctz965w.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact not update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Contact not update"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Contact update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Contact update"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
     },
     "/contacts": {
+      "get": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Get all contacts",
+        "operationId": "getAllContacts",
+        "description": "Get all contacts",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "example": "asc"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "contactType"
+            }
+          },
+          {
+            "name": "isFavourite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "example": false
+            }
+          },
+          {
+            "name": "contactType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "home",
+                "work",
+                "personal"
+              ],
+              "example": "home"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all contacts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found contacts!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
       "post": {
         "tags": [
           "Contacts"
@@ -121,49 +409,51 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": null,
-            "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "phoneNumber",
-                "contactType"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "Contact name",
-                  "example": "Nick Daltan"
-                },
-                "phoneNumber": {
-                  "type": "string",
-                  "description": "Contact phone number",
-                  "example": 380973245566
-                },
-                "contactType": {
-                  "type": "string",
-                  "description": "Contact type",
-                  "enum": [
-                    "work",
-                    "home"
-                  ],
-                  "example": "work"
-                },
-                "isFavourite": {
-                  "type": "boolean",
-                  "description": "Contact is favourite",
-                  "example": true,
-                  "default": false
-                },
-                "email": {
-                  "type": "string",
-                  "description": "Contact email",
-                  "example": "name@example.com"
-                },
-                "photo": {
-                  "type": "string",
-                  "format": "binary",
-                  "description": "Contact avatar"
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "phoneNumber",
+                  "contactType"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Contact name",
+                    "example": "Nick Daltan"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "Contact phone number",
+                    "example": 380973245566
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "description": "Contact type",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ],
+                    "example": "work"
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "description": "Contact is favourite",
+                    "example": true,
+                    "default": false
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Contact email",
+                    "example": "name@example.com"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Contact avatar"
+                  }
                 }
               }
             }
@@ -197,6 +487,12 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -216,6 +512,9 @@
           "_id",
           "name",
           "phoneNumber",
+          "email",
+          "isFavourite",
+          "contactType",
           "userId",
           "createdAt",
           "updatedAt"
@@ -252,7 +551,8 @@
             "description": "Contact type",
             "enum": [
               "work",
-              "home"
+              "home",
+              "personal"
             ],
             "example": "home"
           },
@@ -264,7 +564,7 @@
           "photo": {
             "type": "string",
             "format": "url",
-            "description": "Contact avatar url",
+            "description": "Contact photo url",
             "example": "https://res.cloudinary.com/da0i52xig/image/upload/v1750003633/v02yx9z167auidxqc7ur.png"
           },
           "createdAt": {
@@ -278,6 +578,106 @@
             "format": "data-time",
             "description": "Contact updated at",
             "example": "2025-06-16T16:07:14.427+00:00"
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized Error"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email or password is incorrect"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
           }
         }
       }
