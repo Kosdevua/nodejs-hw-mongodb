@@ -26,7 +26,7 @@ requestBody:
           contactType:
             type: string
             description: Contact type
-            enum: ['work', 'home']
+            enum: ['work', 'home', 'personal']
             example: work
           isFavourite:
             type: boolean
@@ -61,3 +61,7 @@ responses:
               example: Contact created successfully
             data:
               $ref: ../../components/schemas/contact.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml
