@@ -11,6 +11,9 @@
   },
   "servers": [
     {
+      "url": "http://localhost:3000"
+    },
+    {
       "url": "https://nodejs-hw-mongodb-7fws.onrender.com"
     }
   ],
@@ -563,7 +566,7 @@
           },
           "photo": {
             "type": "string",
-            "format": "url",
+            "format": "binary",
             "description": "Contact photo url",
             "example": "https://res.cloudinary.com/da0i52xig/image/upload/v1750003633/v02yx9z167auidxqc7ur.png"
           },
