@@ -24,6 +24,7 @@ paths:
     post:
       $ref: '../swagger/paths/contacts/post.yaml'
 servers:
+  - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-7fws.onrender.com
 components:
   securitySchemes:
